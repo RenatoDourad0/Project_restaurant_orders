@@ -1,7 +1,7 @@
 from src.models.ingredient import (
     Ingredient,
+    Restriction,
 )  # noqa: F401, E261, E501
-import pytest
 
 
 # Req 1
@@ -11,15 +11,12 @@ def test_ingredient():
     othering = Ingredient("bacon")
 
     assert ing.name == "farinha"
-    assert ing.__eq__(sameIng)
-
     assert ing.__repr__() == "Ingredient('farinha')"
+
+    assert ing.__eq__(sameIng) is True
+    assert ing.__eq__(othering) is False
+
     assert ing.__hash__() == sameIng.__hash__()
+    assert ing.__hash__() != othering.__hash__()
 
-    assert ing.restrictions.__eq__(Ingredient("farinha").restrictions)
-
-    assert ing.__hash__() == othering.__hash__()
-
-    with pytest.raises(AssertionError):
-        assert ing.__hash__() == othering.__hash__()
-        assert ing.__eq__(othering)
+    assert ing.restrictions == {Restriction.GLUTEN}
