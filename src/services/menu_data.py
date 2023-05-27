@@ -5,7 +5,7 @@ from csv import DictReader
 
 class MenuData:
     def __init__(self, source_path: str) -> None:
-        self.dishes = set()
+        self.dishes = {}
 
         with open(source_path, "r") as menu:
             data = DictReader(menu)
