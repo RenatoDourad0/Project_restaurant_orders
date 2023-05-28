@@ -28,7 +28,10 @@ class MenuBuilder:
     def get_main_menu(self, restriction=None) -> pd.DataFrame:
         menu = []
         for elm in self.menu_data.dishes:
-            if restriction not in elm.get_restrictions():
+            if (
+                restriction not in elm.get_restrictions()
+                and self.inventory.check_recipe_availability(elm.recipe)
+            ):
                 menu.append(
                     {
                         "dish_name": elm.name,
